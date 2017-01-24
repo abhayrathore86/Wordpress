@@ -32,6 +32,11 @@ get_header(); ?>
 				endif;
 
 			endwhile; // End of the loop.
+
+			/* list custom posy
+			*/
+
+
 			?>
 
 		</main><!-- #main -->

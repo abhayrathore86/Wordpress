@@ -45,6 +45,9 @@ get_header(); ?>
 					get_template_part( 'template-parts/post/content', get_post_format() );
 
 				endwhile;
+				
+
+	
 
 				the_posts_pagination( array(
 					'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
