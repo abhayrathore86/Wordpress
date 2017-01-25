@@ -10,8 +10,12 @@
 		<main id="main" class="site-main" role="main">
 
 			<?php
-			foreach ( get_post_types( '', 'names' ) as $post_type ) {
-				
+			$args1 = array(
+       			'public'   => true,
+       			'_builtin' => false,
+    		);
+			foreach ( get_post_types( $args1, 'names' ) as $post_type ) {
+			 	
 			$args = array( 'post_type' => $post_type, 'posts_per_page' => 10 );
 			$loop = new WP_Query( $args );
 			if( $loop->have_posts() ){

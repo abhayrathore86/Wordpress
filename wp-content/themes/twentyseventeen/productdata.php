@@ -27,13 +27,8 @@ while ( $products->have_posts() ) : $products->the_post();
 echo '<p>' .get_the_title(). '</p>';
 endwhile;
 wp_reset_postdata();*/
-
-
-
-
-
-
-			$args = array( 'post_type' => 'products', 'posts_per_page' => 2 );
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : '1';
+		$args = array( 'nopaging' => false,'paged' => $paged,'post_type' => 'products', 'posts_per_page' => 2 );
 			$loop = new WP_Query( $args );
 			while ( $loop->have_posts() ) : $loop->the_post();
 			    
@@ -44,31 +39,27 @@ wp_reset_postdata();*/
 			    echo '</b></h1>';
 			    echo '<p>';
 			    the_post_thumbnail();
-			    the_content();/*
-			    $product_colors = get_post_meta( get_post()->ID, 'color', false );
-				foreach ( $product_colors as $color ) {
-				echo 'color:' .$color ;
-				}*/
+			    the_content();
+			    
 				//display all metadata on frontend
-				$myvals = get_post_meta(get_post()->ID);
+				$custom_field_keys = get_post_custom_keys(get_post()->ID);
 
-				foreach($myvals as $key=>$val)
-				{
-				    echo $key . ' : ' . $val[0] . '<br/>';
+				foreach ( $custom_field_keys as $key => $value ) {
+				    $valuet = trim($value);
+				    if ( '_' == $valuet{0} )
+				        continue;
+				    $mykey_values = get_post_custom_values( $value );
+					  foreach ( $mykey_values as $key => $value1 ) {
+					    echo $value . ' : ' . $value1 . '<br/>';
+					  }
 				}
 			    echo '</p></div>';
 			endwhile; // End of the loop.
-			
-
-			
-			
-
-
 			?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
-</div><!-- .wrap --><center><a id="more_posts"><button>Load More</button></a></center>
+</div><!-- .wrap --><center><?php previous_posts_link( '<button>« Newer Entries</button>' );?><?php next_posts_link( '<button>Older Entries »</button>', $loop->max_num_pages );?></center>
 
 <?php get_footer();
 
