@@ -68,7 +68,11 @@ $textarea = $instance['textarea'];
 echo $before_widget;
 
 // Display the widget
+<<<<<<< HEAD
 echo '<div class="widget-text wp_widget_plugin_box" style="width:269px; padding:5px 9px 20px 5px; border: 3px solid rgb(231, 15, 52); background: #DAF7A6  ; border-radius: 5px; margin: 10px 0 25px 0;">';
+=======
+echo '<div class="widget-text wp_widget_plugin_box" style="width:269px; padding:5px 9px 20px 5px; border: 3px solid rgb(231, 15, 52); background: #DAF7A6  ; border-radius: 35px; margin: 10px 0 25px 0;">';
+>>>>>>> master
 echo '<div class="widget-title" style="width: 90%; height:30px; margin-left:3%;font-size:20px; ">';
 
 // Check if title is set
