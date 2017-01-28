@@ -2,8 +2,6 @@
 	/*
 	Plugin Name: Contact Us plugin
 	Description: Building a Contact us plugin for demosite.
-	Author: Developer 53
-	Version: 1
 	*/
 	class my_contact_us extends WP_Widget {
 		// constructor
