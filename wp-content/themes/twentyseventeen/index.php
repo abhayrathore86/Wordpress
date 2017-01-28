@@ -55,7 +55,7 @@ get_header(); ?>
 					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
 				) );
 
-			else :
+			else :			
 
 				get_template_part( 'template-parts/post/content', 'none' );
 
@@ -64,7 +64,8 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
-	<?php get_sidebar(); ?>
+	<?php get_sidebar();?>
 </div><!-- .wrap -->
 
 <?php get_footer();
+
