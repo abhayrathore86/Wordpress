@@ -4,19 +4,23 @@ global $wpdb;
 	$fn=$_REQUEST['firstname'];
 	$ln=$_REQUEST['lastname'];
 	$age=$_REQUEST['age'];
-	$gender=$_REQUEST['gender'];
-	$target_dir = "/var/www/html/wordpress/wp-content/uploads/2017/01/";
-	$image=basename($_FILES["image"]["name"]);
-	$target_file = $target_dir.$image ;
-	if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+	$gender=$_REQUEST['gender'];	
+	if ( ! function_exists( 'wp_handle_upload' ) ) {
+	    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+	}
+
+	$uploadedfile = $_FILES['image'];
+	$image=$uploadedfile['name'];
+	$upload_overrides = array( 'test_form' => false );
+
+	$movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+
+	if ( $movefile && ! isset( $movefile['error'] ) ) {
 	    $data=array('c_fname'=>$fn,'c_lname'=>$ln,'c_age'=>$age,'c_gender'=>$gender,'c_image'=>$image);
-	    	if($wpdb->insert( 'wp_customer', $data)){
+	   	if($wpdb->insert( 'wp_customer', $data)){
 				echo "data inserted";
-			} 
-	    } else {
-	        echo "Sorry, there was an error uploading your file.";
-	    }
-		
-	
-	
+		}
+	} else {
+	    echo $movefile['error'];
+	}
 ?>

@@ -1,7 +1,10 @@
 jQuery(document).ready(function (e) {
    jQuery.ajax({
-            url: "../wp-content/plugins/CRUD_Plugin/display.php",
-            type: "POST",             
+            url: myAjax.ajaxurl,
+            type: "POST",
+            data:{
+               'action':'dispData'
+            }  ,           
             success: function(data)   
             {
                jQuery('#disp').html(data);
@@ -9,42 +12,73 @@ jQuery(document).ready(function (e) {
           });
    jQuery("#insertForm").on('submit',(function(e) {
       e.preventDefault();
-      
+      var file_data = jQuery('#imageUp').prop('files')[0];   
+       var form_data = new FormData();                  
+       form_data.append('file', file_data);
+       //alert(form_data);  
+      var fn=jQuery("#firstname").val();
+      var ln=jQuery("#lastname").val();
+      var age=jQuery("#age").val();
+      var gen=jQuery("#gender").val();
+      var im=form_data.get('file');
+      console.log(im);
       jQuery.ajax({
-         url: "../wp-content/plugins/CRUD_Plugin/insert.php", 
-         type: "POST",             
-         data: new FormData(this), 
-         contentType: false,       
-         processData:false,        
-         success: function(data) 
-         {
-            alert(data);
-            jQuery('#insertForm')[0].reset();
-            //location.reload();
-            jQuery.ajax({
-            url: "../wp-content/plugins/CRUD_Plugin/display.php",
-            type: "POST",             
-            success: function(data)   
-            {
-               jQuery('#disp').html(data);
-            }
-          });
-         }
-   });
+      url: myAjax.ajaxurl,
+      data: {
+         'action':'insertData','fn':fn,'ln':ln,'age':age,'gen':gen,'im':form_data
+      },
+      success:function(data) {
+         jQuery('#disp').html(data);
+      },
+      error: function(errorThrown){
+          console.log(errorThrown);
+      }
+   }); 
    }));
+   
 });
  function UpdateRecord(id)
   {
       jQuery.ajax({
        type: "POST",    
-       url: "../wp-content/plugins/CRUD_Plugin/update.php?id="+id,
+       url: ajaxurl,
        cache: false,
+       data:{
+               'action':'updateData',
+               'id' : id
+            }  ,
        success: function(response)
        {
-         jQuery('#insertForm').html('');
-         alert(response);
-         jQuery('#editForm').html(response);
+         //alert(response);
+         jQuery('#Form').html(response);
 
+       }
+     });
+ }
+ function DeleteRecord(id)
+  {
+      jQuery.ajax({
+       type: "POST",    
+       url: ajaxurl,
+       cache: false,
+       data:{
+               'action':'deleteData',
+               'id' : id
+            }  ,
+       success: function(response)
+       {
+         alert(response);
+         jQuery.ajax({
+            url: ajaxurl,
+            type: "POST", 
+            data:{
+               'action':'dispData'
+            }  ,            
+            success: function(data)   
+            {
+               jQuery('#disp').html(data);
+            }
+          });
        }
      });
  }
